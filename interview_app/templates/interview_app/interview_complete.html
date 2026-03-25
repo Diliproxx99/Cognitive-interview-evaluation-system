@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview Completed</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding-top: 60px;
+        }
+        .box {
+            background: white;
+            color: black;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 12px;
+            width: 500px;
+            text-align: left;
+        }
+        h2 {
+            text-align: center;
+        }
+        .summary p {
+            margin: 6px 0;
+        }
+        .feedback {
+            margin-top: 25px;
+        }
+        .feedback-item {
+            background: #f4f6fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .score {
+            font-weight: bold;
+        }
+        .center {
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Interview Completed 🎉</h2>
+
+    <!-- SUMMARY -->
+    <div class="summary">
+        <p>Total Questions: <strong>{{ total }}</strong></p>
+        <p>Answered Questions: <strong>{{ answered }}</strong></p>
+        <p>Score: <strong>{{ score }} / {{ total }}</strong></p>
+        <p>Percentage: <strong>{{ percentage }}%</strong></p>
+    </div>
+
+    <hr>
+
+    <!-- AI FEEDBACK -->
+    <div class="feedback">
+        <h3 class="center">AI Interview Feedback</h3>
+
+        {% for item in feedback %}
+            <div class="feedback-item">
+                <p><strong>Question:</strong><br> {{ item.question }}</p>
+                <p class="score">Score: {{ item.score }} / 1</p>
+                <p><strong>Feedback:</strong> {{ item.comment }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="center">
+        <br>
+        <a href="/">Go to Home</a>
+    </div>
+</div>
+
+</body>
+</html>

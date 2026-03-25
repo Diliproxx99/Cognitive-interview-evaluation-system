@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Analysis</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 420px;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .skills {
+            margin-top: 15px;
+        }
+
+        .skills span {
+            display: inline-block;
+            background: #eef2ff;
+            padding: 6px 14px;
+            margin: 6px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .level {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2a5298;
+        }
+
+        button {
+            margin-top: 30px;
+            width: 100%;
+            padding: 14px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e3c72;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Resume Analysis</h2>
+
+    <p><strong>Extracted Skills</strong></p>
+    <div class="skills">
+        {% for skill in skills %}
+            <span>{{ skill }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="level">
+        Estimated Level: {{ level }}
+    </div>
+
+    <a href="{% url 'interview_setup' %}">
+    <button class="btn">Start Interview →</button>
+</a>
+</div>
+
+</body>
+</html>

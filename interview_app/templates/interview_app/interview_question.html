@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview Question</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #1e3c72;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            width: 520px;
+            border-radius: 12px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+            margin-top: 10px;
+            resize: none;
+        }
+
+        video {
+            width: 100%;
+            height: 240px;
+            margin-top: 10px;
+            border-radius: 10px;
+            background: black;
+        }
+
+        button {
+            margin-top: 12px;
+            width: 100%;
+            padding: 10px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mic-btn { background: #0f766e; }
+        .retry-btn { background: #475569; display: none; }
+
+        .status {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .attempt {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h3>Question {{ number }}</h3>
+    <p>{{ question }}</p>
+
+    <p class="attempt" id="attemptDisplay">
+        Attempt 1 of 2
+    </p>
+
+    <form method="POST" id="answerForm">
+        {% csrf_token %}
+
+        {% if mode == "text" %}
+            <!-- ✅ CHANGED HERE -->
+            <textarea name="answers" required></textarea>
+
+        {% elif mode == "voice" or mode == "video" %}
+
+            {% if mode == "video" %}
+                <video id="videoPreview" autoplay muted></video>
+                <div class="status">
+                    🎥 Camera active. Speak confidently.
+                </div>
+            {% endif %}
+
+            <!-- ✅ CHANGED HERE -->
+            <textarea
+                name="answers"
+                id="voiceText"
+                placeholder="Your spoken answer appears here..."
+                required
+            ></textarea>
+
+            <button type="button" class="mic-btn" id="startVoiceBtn">
+                🎤 Start Speaking
+            </button>
+
+            <button type="button" class="retry-btn" id="retryBtn">
+                🔄 Retry
+            </button>
+
+            <div class="status" id="voiceStatus">
+                Click mic and speak clearly
+            </div>
+
+        {% endif %}
+
+        <button type="submit">Next</button>
+    </form>
+
+</div>
+
+<script>
+
+// ---------------- ATTEMPT SYSTEM ----------------
+let attempt = 1;
+const maxAttempts = 2;
+
+const startBtn = document.getElementById("startVoiceBtn");
+const retryBtn = document.getElementById("retryBtn");
+const status = document.getElementById("voiceStatus");
+const textarea = document.getElementById("voiceText");
+const attemptDisplay = document.getElementById("attemptDisplay");
+const form = document.getElementById("answerForm");
+
+function updateAttempt() {
+    if (attemptDisplay)
+        attemptDisplay.innerText = `Attempt ${attempt} of ${maxAttempts}`;
+}
+
+// ---------------- SPEECH RECOGNITION ----------------
+if (startBtn) {
+
+    const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        startBtn.onclick = () => {
+
+            if (attempt > maxAttempts) return;
+
+            status.innerText = "🎧 Listening...";
+            startBtn.disabled = true;
+
+            recognition.start();
+        };
+
+        recognition.onresult = (event) => {
+
+            textarea.value = event.results[0][0].transcript;
+
+            status.innerText = `✅ Attempt ${attempt} recorded`;
+            startBtn.disabled = false;
+
+            if (attempt < maxAttempts) {
+                retryBtn.style.display = "block";
+            } else {
+                status.innerText += " — limit reached";
+                retryBtn.style.display = "none";
+            }
+
+            updateAttempt();
+        };
+
+        recognition.onerror = () => {
+            status.innerText = "⚠️ Speech failed. Try again.";
+            startBtn.disabled = false;
+        };
+
+        retryBtn.onclick = () => {
+
+            if (attempt >= maxAttempts) return;
+
+            attempt++;
+            textarea.value = "";
+            status.innerText = "🔄 Retry speaking...";
+            retryBtn.style.display = "none";
+
+            updateAttempt();
+        };
+
+        updateAttempt();
+
+    } else {
+        alert("Speech recognition not supported in this browser.");
+    }
+}
+
+// ---------------- VIDEO CAMERA ----------------
+const video = document.getElementById("videoPreview");
+
+if (video) {
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(error => {
+            alert("Camera access denied or not available.");
+            console.error(error);
+        });
+}
+
+// ---------------- FORM VALIDATION ----------------
+form.onsubmit = function() {
+
+    // ✅ CHANGED HERE
+    const answerField = document.querySelector("textarea[name='answers']");
+
+    if (answerField && answerField.value.trim() === "") {
+        alert("Please provide your answer first!");
+        return false;
+    }
+
+    return true;
+};
+
+</script>
+
+</body>
+</html>

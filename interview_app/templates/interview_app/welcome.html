@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>COGNITO – Cognitive Interview Evaluation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding-top: 120px;
+        }
+        .box {
+            background: white;
+            color: black;
+            width: 50%;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #16325c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>COGNITO – Cognitive Interview Evaluation System</h1>
+
+    <p>
+        An AI-powered platform designed to simulate real-time interviews and
+        evaluate technical skills, communication, confidence, and personality.
+    </p>
+
+    <ul style="text-align:left; display:inline-block;">
+        <li>AI-based resume skill extraction</li>
+        <li>Technical, HR, and Computer Fundamentals interviews</li>
+        <li>Text, Voice, and Video-based interview modes</li>
+        <li>Real-time evaluation of confidence, stress, and communication</li>
+        <li>Detailed feedback on performance and improvement areas</li>
+    </ul>
+
+    <br><br>
+
+    <a href="{% url 'resume_upload' %}">
+        <button>Start Interview</button>
+    </a>
+</div>
+
+</body>
+</html>

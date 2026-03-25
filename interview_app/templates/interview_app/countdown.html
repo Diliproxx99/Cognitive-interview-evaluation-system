@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Starting</title>
+
+    <!-- SINGLE, CLEAN REDIRECT -->
+    <meta http-equiv="refresh" content="4;url=/interview/question/">
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .box {
+            text-align: center;
+        }
+        #count {
+            font-size: 80px;
+            font-weight: bold;
+        }
+        .msg {
+            margin-top: 20px;
+            font-size: 18px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div id="count">3</div>
+    <div class="msg">Interview is about to begin</div>
+</div>
+
+<script>
+    let count = 3;
+
+    const timer = setInterval(() => {
+        count--;
+        document.getElementById("count").innerText = count;
+
+        if (count === 0) {
+            clearInterval(timer);
+            document.getElementById("count").innerText = "Ready";
+            document.querySelector(".msg").innerText =
+                "Interview will start now...";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>

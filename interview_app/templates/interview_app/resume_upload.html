@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Resume | AI Interview System</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 420px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+
+        .card h1 {
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .upload-box {
+            border: 2px dashed #1e3c72;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #16305a;
+            transform: scale(1.03);
+        }
+
+        .note {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ✅ FIX IS HERE -->
+    <form class="card"
+          method="POST"
+          action="{% url 'analyze_resume' %}"
+          enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <h1>Upload Your Resume</h1>
+        <p>Your interview questions will be generated from your resume</p>
+
+        <div class="upload-box">
+            <strong>Supported formats</strong>
+            <p>PDF / DOCX</p>
+            <input type="file" name="resume" required>
+        </div>
+
+        <button type="submit" class="btn">Analyze Resume →</button>
+
+        <div class="note">
+            Your resume is processed securely and privately
+        </div>
+    </form>
+
+</body>
+</html>

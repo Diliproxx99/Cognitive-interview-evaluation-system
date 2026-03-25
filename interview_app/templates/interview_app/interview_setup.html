@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview Setup</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #1e3c72;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            width: 420px;
+            border-radius: 12px;
+        }
+        h2 { text-align: center; }
+        label { font-weight: bold; }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+        button {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function toggleLanguage() {
+            const interviewType = document.getElementById("interview_type").value;
+            const langSection = document.getElementById("language_section");
+
+            if (interviewType === "technical") {
+                langSection.style.display = "block";
+            } else {
+                langSection.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<form method="POST" action="{% url 'start_interview' %}" class="card">
+    {% csrf_token %}
+
+    <h2>Interview Setup</h2>
+
+    <!-- Interview Type -->
+    <label>Interview Type</label>
+    <select name="interview_type" id="interview_type" onchange="toggleLanguage()" required>
+        <option value="technical">Technical</option>
+        <option value="hr">HR</option>
+        <option value="fundamentals">Computer fundamentals</option>
+        <option value="mixed">Mixed</option>
+    </select>
+
+    <!-- Programming Language -->
+    <div id="language_section">
+        <label>Programming Language</label>
+        <select name="language">
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="c">C</option>
+        </select>
+    </div>
+
+    <!-- Difficulty -->
+    <label>Difficulty Level</label>
+    <select name="difficulty" required>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Advanced">Advanced</option>
+    </select>
+
+    <!-- Mode -->
+    <label>Interview Mode</label>
+    <select name="mode" required>
+        <option value="text">Text</option>
+        <option value="voice">Voice</option>
+        <option value="video">Video</option>
+    </select>
+
+    <button type="submit">Start Interview</button>
+</form>
+
+<script>
+    toggleLanguage();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interview Practice</title>
+</head>
+<body>
+
+<h2>Interview Practice</h2>
+
+<form method="POST" action="{% url 'result' %}">
+    {% csrf_token %}
+
+    <label>Enter your answer:</label><br><br>
+
+    <textarea name="answer" rows="6" cols="60" required></textarea><br><br>
+
+    <button type="submit">Evaluate</button>
+</form>
+
+</body>
+</html>

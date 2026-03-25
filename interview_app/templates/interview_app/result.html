@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Analysis</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            width: 420px;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #1e3c72;
+        }
+
+        .skills {
+            margin: 15px 0;
+        }
+
+        .skills span {
+            display: inline-block;
+            background: #eef2ff;
+            color: #1e3c72;
+            padding: 6px 14px;
+            margin: 6px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .level {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2a5298;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Resume Analysis</h2>
+
+    <h4>Extracted Skills</h4>
+    <div class="skills">
+        {% for skill in skills %}
+            <span>{{ skill }}</span>
+        {% endfor %}
+    </div>
+
+    <h4>Estimated Level</h4>
+    <div class="level">{{ level }}</div>
+
+    <form method="POST" action="{% url 'start_interview' %}">
+        {% csrf_token %}
+        <button type="submit">Start Interview</button>
+    </form>
+</div>
+
+</body>
+</html>
